@@ -1,41 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-//test
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    private Rigidbody2D body;
-    private bool grounded;
+    public float speed = 1f;
+    public float jumpForce = 5f;
+    public float Scale = 0.2f;
 
-    private void Awake()
+    Rigidbody2D rb;
+
+    void Start()
     {
-        //grab references from object
-        body = GetComponent<Rigidbody2D>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float movement = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(movement, 0, 0) * speed * Time.deltaTime;
 
-        body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.05f)
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
 
-    //flip player when moving left-right
-       if(horizontalInput>0.01f)
-            transform.localScale = Vector3.one;
-        else if(horizontalInput < -0.01f)
-            transform.localScale = new Vector3 (-1,1,1);
-
-       if (Input.GetKey(KeyCode.Space))
-       Jump();
-    }
-
-    private void Jump()
-    {   body.velocity = new Vector2(body.velocity.x, speed);
-        grounded = false;
-
+        if (movement > 0)
+        {
+            gameObject.transform.localScale = new Vector3(Scale, Scale, Scale);
         }
-    
-    private void OnCollisionEnter2D(Collision2D collision) {
-        
+
+        if (movement < 0)
+        {
+            gameObject.transform.localScale = new Vector3(-Scale, Scale, Scale);
+        }
     }
 }
