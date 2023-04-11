@@ -1,36 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 1f;
-    public float jumpForce = 5f;
-    public float Scale = 0.2f;
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpPower = 10;
+    [SerializeField] private LayerMask groundLayer;
+    private Rigidbody2D body;
+    private BoxCollider2D boxCollider;
+    private float horizontalInput;
 
-    Rigidbody2D rb;
 
-    void Start()
+    private void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        //Grab references for rigidbody and animator from object
+        body = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        float movement = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(movement, 0, 0) * speed * Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.05f)
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-
-        if (movement > 0)
+        if (!Flying())
         {
-            gameObject.transform.localScale = new Vector3(Scale, Scale, Scale);
+            horizontalInput = Input.GetAxis("Horizontal");
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
         }
 
-        if (movement < 0)
+        //Flip player when moving left-right
+        if (horizontalInput > 0.01f)
+            transform.localScale = Vector3.one;
+        else if (horizontalInput < -0.01f)
+            transform.localScale = new Vector3(-1, 1, 1);
+
+        if (Input.GetKey(KeyCode.Space) && isGrounded() && !Flying())
         {
-            gameObject.transform.localScale = new Vector3(-Scale, Scale, Scale);
+            Jump();
+
         }
+
+
     }
+
+    private bool Flying()
+    {
+        bool moving = Mathf.Abs(body.velocity.y) > 0.05f;
+        return moving;
+    }
+
+    private void Jump()
+    {
+        body.velocity = new Vector2(body.velocity.x, jumpPower);
+
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+    }
+
+    private bool isGrounded()
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
+        return raycastHit.collider != null;
+
+    }
+
 }
