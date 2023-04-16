@@ -20,11 +20,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!Flying())
-        {
-            horizontalInput = Input.GetAxis("Horizontal");
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-        }
+
+
+        horizontalInput = Input.GetAxis("Horizontal");
+        body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
 
         //Flip player when moving left-right
         if (horizontalInput > 0.01f)
