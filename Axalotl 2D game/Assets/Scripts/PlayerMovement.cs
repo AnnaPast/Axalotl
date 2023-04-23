@@ -6,9 +6,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower = 10;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask waterLayer;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     private float horizontalInput;
+    private bool isSwimming;
 
 
     private void Awake()
@@ -56,6 +58,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            isSwimming = true;
+            Debug.Log("Player has collided with water.");
+        }
+
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            isSwimming = false;
+            Debug.Log("Player has collided with water.");
+        }
+
     }
 
     private bool isGrounded()
