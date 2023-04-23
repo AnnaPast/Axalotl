@@ -28,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
 
         //Flip player when moving left-right
         if (horizontalInput > 0.01f)
-            transform.localScale = Vector3.one;
+            transform.rotation = Quaternion.identity;
         else if (horizontalInput < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 
         if (Input.GetKey(KeyCode.Space) && isGrounded() && !Flying())
         {
