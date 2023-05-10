@@ -4,7 +4,7 @@ public class PlayerRespawn : MonoBehaviour
 {
     private Transform currentCheckpoint;
 
-    private void private void Awake()
+    private void Awake()
     {
 
     }
