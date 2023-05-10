@@ -30,10 +30,16 @@ public class PlayerMovement : MonoBehaviour
         else if (horizontalInput < -0.01f)
             transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded && !isSwimming)
+        if (Input.GetKey(KeyCode.Space) && isGrounded && !isSwimming && !Flying())
         {
             Jump();
         }
+    }
+
+    private bool Flying()
+    {
+        bool moving = Mathf.Abs(body.velocity.y) > 0.05f;
+        return moving;
     }
 
     private void Jump()
