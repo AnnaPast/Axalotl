@@ -6,6 +6,7 @@ public class FallingPlatform : MonoBehaviour
 {
     private float fallDelay = 1f;
     private float destroyDelay = 2f;
+    public Animator animator;
 
     [SerializeField] private Rigidbody2D rb;
 
@@ -14,6 +15,7 @@ public class FallingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(Fall());
+            animator.SetBool("shaking", true);
         }
     }
 

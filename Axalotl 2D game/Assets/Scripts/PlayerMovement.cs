@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     private bool isSwimming;
     private bool isGrounded;
+    public Animator animator;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+        animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
         //Flip player when moving left-right
         if (horizontalInput > 0.01f)
