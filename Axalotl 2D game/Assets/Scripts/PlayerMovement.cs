@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,6 +14,20 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     public Animator animator;
 
+    public float KBForce;
+    public float KBCounter;
+    public float KBTotalTime;
+    public bool KnockFromRight;
+
+    int playerObject, colliderObject;
+    bool jumpOffEnable = false;
+
+    private void Start()
+    {
+        playerObject = LayerMask.NameToLayer("Player");
+        colliderObject = LayerMask.NameToLayer("Collide");
+    }
+
     private void Awake()
     {
         //Grab references for rigidbody and animator from object
@@ -23,7 +38,25 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-        body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
+        if (KBCounter <= 0)
+        {
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+        }
+        else
+        {
+            if (KnockFromRight == true)
+            {
+                body.velocity = new Vector2(-KBForce, KBForce);
+            }
+            if (KnockFromRight == false)
+            {
+                body.velocity = new Vector2(KBForce, KBForce);
+            }
+
+            KBCounter -= Time.deltaTime;
+        }
+
         animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
         //Flip player when moving left-right
@@ -32,10 +65,24 @@ public class PlayerMovement : MonoBehaviour
         else if (horizontalInput < -0.01f)
             transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded && !isSwimming && !isFlying())
+        if (Input.GetKey(KeyCode.Space) && !isSwimming && !isFlying())
         {
             Jump();
         }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            StartCoroutine("JumpOff");
+        }
+    }
+
+    private IEnumerator JumpOff()
+    {
+        jumpOffEnable = true;
+        Physics2D.IgnoreLayerCollision(playerObject, colliderObject, true);
+        yield return new WaitForSeconds(1f);
+        Physics2D.IgnoreLayerCollision(playerObject, colliderObject, false);
+        jumpOffEnable = false;
     }
 
     private bool isFlying()
@@ -51,6 +98,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.name.Equals("Platform"))
+        {
+            this.transform.parent = collision.transform;
+        }
         if (collision.CompareTag("Water"))
         {
             isSwimming = true;
@@ -60,6 +111,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.name.Equals("Platform"))
+        {
+            this.transform.parent = null;
+        }
+
         if (collision.CompareTag("Water"))
         {
             isSwimming = false;
