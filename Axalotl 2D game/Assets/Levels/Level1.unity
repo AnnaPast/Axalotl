@@ -744,7 +744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157696067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000023841858, y: -2.15, z: -9.5}
+  m_LocalPosition: {x: -0.00000047683716, y: -2.15, z: -9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1993,7 +1993,7 @@ MonoBehaviour:
   rb: {fileID: 516044639}
 --- !u!95 &516044641
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2010,7 +2010,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2089,7 +2089,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00000023841858, y: -2.15, z: -9.5}
+  m_LocalPosition: {x: -0.00000047683716, y: -2.15, z: -9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2359,6 +2359,7 @@ MonoBehaviour:
   - {fileID: 217704955}
   - {fileID: 2042390718}
   nextID: 0
+  idChangeValue: 1
   speed: 2
   aiDamage: 1
   _healthController: {fileID: 1396645933}
@@ -4206,7 +4207,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &1094773697
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4223,7 +4224,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1097398012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,13 +5091,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  SwimSpeed: 2
+  GravityInWater: 0.5
   jumpPower: 11
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   waterLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   animator: {fileID: 1396645932}
   KBForce: 5
   KBCounter: 0
@@ -5117,7 +5120,7 @@ MonoBehaviour:
   playerCollider: {fileID: 1396645928}
 --- !u!95 &1396645932
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5134,7 +5137,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &1396645933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5676,7 +5679,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &1481345985
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5693,7 +5696,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1556945384
 GameObject:
   m_ObjectHideFlags: 0

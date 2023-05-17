@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float SwimSpeed;
+    [SerializeField] private float GravityInWater;
     [SerializeField] private float jumpPower = 10;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask waterLayer;
@@ -136,8 +138,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Swim()
     {
-        float verticalInput = Input.GetAxis("Vertical");
-        body.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
+        float verticalInput = -GravityInWater;
+        if (Input.GetKey(KeyCode.Space))
+        {
+            verticalInput = 1f;
+        }
+
+        body.velocity = new Vector2(horizontalInput * SwimSpeed, verticalInput * SwimSpeed);
     }
 
     private bool IsGrounded()
