@@ -98,18 +98,6 @@ public class PlayerMovement : MonoBehaviour
         body.velocity = new Vector2(body.velocity.x, jumpPower);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.name.Equals("Platform"))
-        {
-            this.transform.parent = collision.transform;
-        }
-        if (collision.CompareTag("Water"))
-        {
-            isSwimming = true;
-            Debug.Log("Player has entered water.");
-        }
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
