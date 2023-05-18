@@ -1,52 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FPlatform : MonoBehaviour
 {
+    [SerializeField] private float fallDelay = 2f;      // Задержка перед падением
+    [SerializeField] private float respawnDelay = 1f;   // Задержка перед возвращением
 
-    Rigidbody2D rb;
-    Vector2 currentPosiiotn;
-    bool moveingBack;
-    [SerializeField] private float backPlat = 1f;
+    private Vector3 initialPosition;
+    private Rigidbody2D rb;
 
-    void Start()
+    private void Start()
     {
+        initialPosition = transform.position;
+
         rb = GetComponent<Rigidbody2D>();
-        currentPosiiotn = transform.position;
+
+        StartCoroutine(FallAndRespawn());
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator FallAndRespawn()
     {
-        if (collision.gameObject.name.Equals("Player") && moveingBack == false)
+        while (true)
         {
-            Invoke("FallPlatform", 1f);
-        }
-    }
 
-    void FallPlatform()
-    {
-        rb.isKinematic = false;
-        Invoke("BackPlatform", backPlat);
-    }
- 
-    void BackPlatform()
-    {
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
-        moveingBack = true;
-    }
+            yield return new WaitForSeconds(fallDelay);
 
-    private void Update()
-    {
-        if(moveingBack == true)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, currentPosiiotn, 10f * Time.deltaTime);
-        }
 
-        if(transform.position.y == currentPosiiotn.y)
-        {
-            moveingBack = false;
+            rb.isKinematic = false;
+
+            yield return new WaitForSeconds(1f);
+
+            rb.velocity = Vector2.zero;
+            transform.position = initialPosition;
+
+            yield return new WaitForSeconds(respawnDelay);
         }
     }
 }
