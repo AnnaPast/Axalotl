@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name.Equals("Platform"))
         {
@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.CompareTag("Water"))
         {
-            isSwimming = false;
+            isSwimming = true;
             Debug.Log("Player has exited water.");
         }
     }
