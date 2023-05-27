@@ -129,7 +129,9 @@ public class PlayerMovement : MonoBehaviour
         if (isSwimming)
         {
             Swim();
+            animator.SetBool("Swim", true);
         }
+        else animator.SetBool("Swim", false);
     }
 
     private void Swim()
