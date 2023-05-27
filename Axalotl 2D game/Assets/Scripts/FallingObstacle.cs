@@ -38,6 +38,12 @@ public class FallingObstacle : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            HealthController healthController = other.gameObject.GetComponent<HealthController>();
+            if (healthController != null)
+            {
+                healthController.playerHealth -= 1;
+                healthController.UpdateHealth();
+            }
             Destroy(gameObject);
         }
         else
@@ -45,6 +51,5 @@ public class FallingObstacle : MonoBehaviour
             rb.gravityScale = 0;
             boxCollider2D.enabled = false;
         }
-
     }
 }
