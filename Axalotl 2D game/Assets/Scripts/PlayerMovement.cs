@@ -112,6 +112,14 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Player has exited water.");
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water"))
+        {
+            isSwimming = false;
+            Debug.Log("Player has exited water.");
+        }
+    }
 
     private void FixedUpdate()
     {
