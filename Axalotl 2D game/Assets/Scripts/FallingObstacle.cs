@@ -50,6 +50,7 @@ public class FallingObstacle : MonoBehaviour
         {
             rb.gravityScale = 0;
             boxCollider2D.enabled = false;
+            Destroy(gameObject);
         }
     }
 }
