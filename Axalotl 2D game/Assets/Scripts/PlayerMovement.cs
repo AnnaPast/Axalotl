@@ -98,13 +98,24 @@ public class PlayerMovement : MonoBehaviour
         body.velocity = new Vector2(body.velocity.x, jumpPower);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals ("Platform"))
+        {
+            this.transform.parent = collision.transform;
+        }
+    }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name.Equals("Platform"))
         {
             this.transform.parent = null;
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
 
         if (collision.CompareTag("Water"))
         {
