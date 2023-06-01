@@ -7,7 +7,6 @@ public class HealthController : MonoBehaviour
 {
     public int playerHealth;
     Vector2 checkpointPos;
-
     [SerializeField] private Image[] hearts;
 
 
@@ -39,7 +38,7 @@ public class HealthController : MonoBehaviour
     }
 
 
-    void Die()
+    private void Die()
     {
        Respawn();
     }
